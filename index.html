@@ -3,37 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>snowy的随记</title>
+    <title>古风雅韵 · 昼夜版</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease;
+        }
+
+        :root {
+            --bg-main: #f5f0e6;
+            --card-bg: rgba(255,255,255,0.85);
+            --text-color: #444;
+            --poem-color: #5a4a3c;
+            --border-color: #d4c7b0;
+            --line-color: #b8a68f;
+            --btn-bg: transparent;
+            --btn-text: #5a4a3c;
+            --btn-hover-bg: #8b7d6b;
+            --btn-hover-text: #fff;
+        }
+
+        /* 夜间模式 */
+        body.dark {
+            --bg-main: #0c141c;
+            --card-bg: rgba(15,22,30,0.85);
+            --text-color: #c9d1d9;
+            --poem-color: #a8b9cc;
+            --border-color: #2a3b4c;
+            --line-color: #4a5b6c;
+            --btn-bg: transparent;
+            --btn-text: #a8b9cc;
+            --btn-hover-bg: #2a3b4c;
+            --btn-hover-text: #e6edf5;
         }
 
         body {
             font-family: "KaiTi", "STKaiti", "SimSun", serif;
-            background-color: #f5f0e6; /* 宣纸底色 */
-            color: #333;
-            background-image: url("https://cdn.jsdelivr.net/gh/your-image-url/ink-bg.png"); /* 可替换为自己的水墨背景 */
-            background-size: cover;
-            background-attachment: fixed;
-            line-height: 1.8;
+            background-color: var(--bg-main);
+            color: var(--text-color);
+            min-height: 100vh;
             padding: 2rem 1rem;
+        }
+
+        /* 昼夜切换按钮 */
+        .mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 6px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            background: var(--card-bg);
+            cursor: pointer;
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: var(--text-color);
+            z-index: 999;
         }
 
         .container {
             max-width: 700px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.85);
-            padding: 3rem;
-            border: 1px solid #d4c7b0;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            border-radius: 4px;
+            background: var(--card-bg);
+            padding: 3rem 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border-radius: 6px;
             position: relative;
+            overflow: hidden;
         }
 
-        /* 模拟古籍的装订线 */
+        /* 左侧古籍装订线 */
         .container::before {
             content: "";
             position: absolute;
@@ -41,39 +83,80 @@
             top: 0;
             bottom: 0;
             width: 2px;
-            background: #d4c7b0;
+            background: var(--line-color);
+        }
+
+        /* 水墨印章 */
+        .seal {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 2rem;
+            border: 3px solid #a82020;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #a82020;
+            transform: rotate(-10deg);
+            letter-spacing: 4px;
+            background: rgba(168,32,32,0.05);
+        }
+
+        body.dark .seal {
+            border-color: #c83030;
+            color: #c83030;
         }
 
         h1 {
             font-size: 2.2rem;
-            color: #2b2b2b;
+            color: var(--text-color);
             text-align: center;
             margin-bottom: 2rem;
             padding-bottom: 1rem;
-            border-bottom: 1px dashed #8b7d6b;
+            border-bottom: 1px dashed var(--line-color);
             letter-spacing: 0.2em;
         }
 
+        /* 诗词每一句 */
         .poem {
+            margin: 2.5rem 0;
+        }
+        .poem-line {
             font-size: 1.3rem;
             text-align: center;
-            margin: 2rem 0;
-            color: #5a4a3c;
-            line-height: 2;
+            color: var(--poem-color);
+            line-height: 2.2;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeInUp 1s ease forwards;
         }
 
-        .intro {
-            font-size: 1.1rem;
-            margin: 2rem 0;
-            color: #444;
-            text-indent: 2em;
+        /* 逐句延迟 */
+        .poem-line:nth-child(1) { animation-delay: 0.2s; }
+        .poem-line:nth-child(2) { animation-delay: 0.6s; }
+        .poem-line:nth-child(3) { animation-delay: 1s; }
+        .poem-line:nth-child(4) { animation-delay: 1.4s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .divider {
             text-align: center;
             margin: 2rem 0;
-            color: #b8a68f;
+            color: var(--line-color);
             font-size: 1.5rem;
+        }
+
+        .intro {
+            font-size: 1.1rem;
+            margin: 2rem 0;
+            text-indent: 2em;
+            line-height: 1.8;
         }
 
         .btn {
@@ -81,51 +164,69 @@
             width: fit-content;
             margin: 2rem auto 0;
             padding: 0.8rem 2rem;
-            border: 1px solid #8b7d6b;
-            color: #5a4a3c;
+            border: 1px solid var(--border-color);
+            color: var(--btn-text);
             text-decoration: none;
             border-radius: 2px;
-            transition: all 0.3s;
             letter-spacing: 0.1em;
         }
 
         .btn:hover {
-            background-color: #8b7d6b;
-            color: white;
+            background-color: var(--btn-hover-bg);
+            color: var(--btn-hover-text);
         }
 
         footer {
             text-align: center;
             margin-top: 3rem;
-            color: #8b7d6b;
+            color: var(--line-color);
             font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
+    <!-- 昼夜切换按钮 -->
+    <div class="mode-toggle" id="modeBtn">入夜观月</div>
+
     <div class="container">
-        <h1>snowy的随记</h1>
+        <!-- 水墨印章 -->
+        <div class="seal">雅韵</div>
+
+        <h1>古风雅韵</h1>
 
         <div class="poem">
-            青山隐隐水迢迢，<br>
-            秋尽江南草未凋。<br>
-            二十四桥明月夜，<br>
-            玉人何处教吹箫。
+            <div class="poem-line">青山隐隐水迢迢，</div>
+            <div class="poem-line">秋尽江南草未凋。</div>
+            <div class="poem-line">二十四桥明月夜，</div>
+            <div class="poem-line">玉人何处教吹箫。</div>
         </div>
 
-        <div class="divider">
-            —— · ——
-        </div>
+        <div class="divider">—— · ——</div>
 
         <p class="intro">
-            这里是我的一方小天地，记录着我的随笔与日常。愿在这一隅，寻一份悠然与安宁。
+            此间一方小筑，以笔墨寄闲情，以风月慰平生。静看云卷云舒，坐听花落鸟鸣，于尘世一隅，守一份安然清宁。
         </p>
 
-        <a href="#" class="btn">查看更多</a>
+        <a href="#" class="btn">闲览随笔</a>
     </div>
 
     <footer>
-        丙午年 · 夏 记
+        古风小筑 · 自留清欢
     </footer>
+
+    <script>
+        // 昼夜切换
+        const modeBtn = document.getElementById('modeBtn');
+        const body = document.body;
+
+        modeBtn.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            if(body.classList.contains('dark')){
+                modeBtn.innerText = '白日宣纸';
+            }else{
+                modeBtn.innerText = '入夜观月';
+            }
+        });
+    </script>
 </body>
 </html>
