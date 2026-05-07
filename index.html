@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的个人主页</title>
+    <title>古风雅韵</title>
     <style>
         * {
             margin: 0;
@@ -12,111 +12,120 @@
         }
 
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: "KaiTi", "STKaiti", "SimSun", serif;
+            background-color: #f5f0e6; /* 宣纸底色 */
             color: #333;
-            min-height: 100vh;
-            padding: 2rem;
+            background-image: url("https://cdn.jsdelivr.net/gh/your-image-url/ink-bg.png"); /* 可替换为自己的水墨背景 */
+            background-size: cover;
+            background-attachment: fixed;
+            line-height: 1.8;
+            padding: 2rem 1rem;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.85);
+            padding: 3rem;
+            border: 1px solid #d4c7b0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            position: relative;
         }
 
-        .avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: #f0f0f0;
-            margin: 0 auto 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: #667eea;
+        /* 模拟古籍的装订线 */
+        .container::before {
+            content: "";
+            position: absolute;
+            left: 2rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #d4c7b0;
         }
 
         h1 {
+            font-size: 2.2rem;
+            color: #2b2b2b;
             text-align: center;
-            color: #2d3748;
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #8b7d6b;
+            letter-spacing: 0.2em;
         }
 
-        .bio {
+        .poem {
+            font-size: 1.3rem;
             text-align: center;
-            color: #718096;
-            margin-bottom: 2rem;
+            margin: 2rem 0;
+            color: #5a4a3c;
+            line-height: 2;
         }
 
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            justify-content: center;
-            margin-bottom: 2rem;
+        .intro {
+            font-size: 1.1rem;
+            margin: 2rem 0;
+            color: #444;
+            text-indent: 2em;
         }
 
-        .skill-tag {
-            background: #edf2f7;
-            color: #4a5568;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
+        .divider {
+            text-align: center;
+            margin: 2rem 0;
+            color: #b8a68f;
+            font-size: 1.5rem;
         }
 
         .btn {
+            display: block;
+            width: fit-content;
+            margin: 2rem auto 0;
             padding: 0.8rem 2rem;
-            border-radius: 30px;
+            border: 1px solid #8b7d6b;
+            color: #5a4a3c;
             text-decoration: none;
-            font-weight: 500;
+            border-radius: 2px;
             transition: all 0.3s;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-secondary {
-            background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
+            letter-spacing: 0.1em;
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            background-color: #8b7d6b;
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: #8b7d6b;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="avatar">👩‍💻</div>
-        <h1>你好，我是snowy-L</h1>
-        <p class="bio">一个正在学习前端的新手，热爱分享和创造，希望能做出更多有趣的东西✨</p>
-        
-        <div class="skills">
-            <span class="skill-tag">HTML</span>
-            <span class="skill-tag">CSS</span>
-            <span class="skill-tag">GitHub Pages</span>
-            <span class="skill-tag">正在学习JS</span>
+        <h1>古风雅韵</h1>
+
+        <div class="poem">
+            青山隐隐水迢迢，<br>
+            秋尽江南草未凋。<br>
+            二十四桥明月夜，<br>
+            玉人何处教吹箫。
         </div>
 
-        <div class="btn-group">
-            <a href="#" class="btn btn-primary">了解更多</a>
-            <a href="#" class="btn btn-secondary">联系我</a>
+        <div class="divider">
+            —— · ——
         </div>
+
+        <p class="intro">
+            这里是我的一方小天地，记录着我的随笔与日常。愿在这一隅，寻一份悠然与安宁。
+        </p>
+
+        <a href="#" class="btn">查看更多</a>
     </div>
+
+    <footer>
+        丙午年 · 夏 记
+    </footer>
 </body>
 </html>
