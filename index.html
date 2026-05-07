@@ -68,18 +68,22 @@
             max-width: 1000px;
             margin: 0 auto;
             width: 100%;
-            align-items: flex-start;
+            align-items: stretch; /* 左右高度自动对齐 */
         }
 
-        /* 左侧侧边栏 */
+        /* 左侧侧边栏 加宽、和右侧等高 */
         .sidebar {
-            width: 220px;
+            width: 240px;
             background: var(--sidebar-bg);
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            padding: 25px 20px;
-            position: sticky;
-            top: 30px;
+            padding: 25px 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sidebar-top {
             display: flex;
             flex-direction: column;
         }
@@ -87,39 +91,63 @@
         .sidebar-title {
             text-align: center;
             font-size: 18px;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
             border-bottom: 1px dashed var(--line-color);
+            letter-spacing: 2px;
         }
 
+        /* 分类可点击样式 */
         .menu-group {
-            margin-bottom: 14px;
+            margin-bottom: 18px;
         }
 
         .menu-main {
+            display: block;
             font-size: 16px;
             color: var(--poem-color);
-            padding-left: 8px;
+            padding: 8px 10px;
+            border: 1px solid transparent;
             border-left: 3px solid var(--line-color);
+            text-decoration: none;
+            transition: 0.3s;
         }
 
-        /* 侧边栏按钮 放分类下面 */
+        .menu-main:hover {
+            background: var(--card-bg);
+            border-radius: 6px;
+            border-color: var(--border-color);
+        }
+
+        /* 左侧按钮统一样式 */
         .sidebar-btn {
-            margin-top: 30px;
+            margin-top: 20px;
             text-align: center;
         }
 
         .sidebar-btn a {
-            padding: 10px 22px;
+            display: inline-block;
+            padding: 9px 20px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             color: var(--btn-text);
             text-decoration: none;
+            font-size: 15px;
+            transition: 0.3s;
         }
 
         .sidebar-btn a:hover {
             background: var(--btn-hover-bg);
             color: var(--btn-hover-text);
+        }
+
+        /* 左侧底部小图预留位置 */
+        .sidebar-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 30px;
+            border: 1px solid var(--border-color);
         }
 
         /* 主内容区 */
@@ -158,7 +186,7 @@
             line-height: 2;
             opacity: 0;
             transform: translateY(10px);
-            animation: fadeIn 1s forwards;
+            animation fadeIn 1s forwards;
         }
 
         .poem-line:nth-child(1) { animation-delay: 0.2s; }
@@ -180,12 +208,12 @@
             line-height: 1.8;
         }
 
-        /* 页脚放最底部居中 */
         footer {
             text-align: center;
             margin-top: 40px;
             font-size: 14px;
             color: var(--line-color);
+            letter-spacing: 1px;
         }
 
         /* 手机自适应 */
@@ -195,7 +223,6 @@
             }
             .sidebar {
                 width: 100%;
-                position: static;
             }
             .main-content {
                 padding: 25px 20px;
@@ -211,37 +238,39 @@
     <div class="mode-toggle" id="modeBtn">入夜观月</div>
 
     <div class="wrapper">
-        <!-- 左侧分类 + 踩一踩按钮在分类下面 -->
+        <!-- 左侧栏 -->
         <div class="sidebar">
-            <div class="sidebar-title">2026年随记</div>
+            <div class="sidebar-top">
+                <div class="sidebar-title">2026年随记</div>
 
-            <div class="menu-group">
-                <div class="menu-main">立春 • 谷雨</div>
-            </div>
-            <div class="menu-group">
-                <div class="menu-main">立夏 • 大暑</div>
-            </div>
-            <div class="menu-group">
-                <div class="menu-main">立秋 • 霜降</div>
-            </div>
-            <div class="menu-group">
-                <div class="menu-main">立冬 • 大寒</div>
+                <div class="menu-group">
+                    <a href="#" class="menu-main">立春 • 谷雨</a>
+                </div>
+                <div class="menu-group">
+                    <a href="#" class="menu-main">立夏 • 大暑</a>
+                </div>
+                <div class="menu-group">
+                    <a href="#" class="menu-main">立秋 • 霜降</a>
+                </div>
+                <div class="menu-group">
+                    <a href="#" class="menu-main">立冬 • 大寒</a>
+                </div>
+
+                <div class="sidebar-btn">
+                    <a href="#">踩一踩 🐾</a>
+                </div>
             </div>
 
-            <!-- 踩一踩 放在左侧分类最下面 -->
-            <div class="sidebar-btn">
-                <a href="#">踩一踩 🐾</a>
-            </div>
+            <!-- 左下新增小图 后续把 small.jpg 换成你上传的图片名即可 -->
+            <img class="sidebar-img" src="small.jpg" alt="侧边小图">
         </div>
 
-        <!-- 主内容：标题→图片→诗句→文案 全部居中 -->
+        <!-- 主内容区 -->
         <div class="main-content">
             <h1>snowy随记 · 二零二六年</h1>
 
-            <!-- 标题下面 图片居中 -->
             <img class="mid-img" src="DSC01331.JPG" alt="古风配图">
 
-            <!-- 图片下面 诗句居中 -->
             <div class="poem">
                 <div class="poem-line">青山隐隐水迢迢，</div>
                 <div class="poem-line">秋尽江南草未凋。</div>
@@ -251,14 +280,12 @@
 
             <div class="divider">—— · ——</div>
 
-            <!-- 这句文字居中 -->
             <p class="intro">
                 静看云卷云舒，坐听花落鸟鸣，于尘世一隅中，观宇宙思缥缈。
             </p>
         </div>
     </div>
 
-    <!-- 丙午年·夏记 放整个页面最底下居中 -->
     <footer>丙午年 · 夏记</footer>
 
     <script>
