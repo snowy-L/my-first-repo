@@ -46,9 +46,6 @@
             color: var(--text-color);
             min-height: 100vh;
             padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
         }
 
         .mode-toggle {
@@ -65,7 +62,6 @@
             z-index: 100;
         }
 
-        /* 布局：电脑左右，手机上下 */
         .wrapper {
             display: flex;
             gap: 25px;
@@ -75,7 +71,7 @@
             align-items: flex-start;
         }
 
-        /* 左侧分类 */
+        /* 左侧侧边栏 */
         .sidebar {
             width: 220px;
             background: var(--sidebar-bg);
@@ -84,6 +80,8 @@
             padding: 25px 20px;
             position: sticky;
             top: 30px;
+            display: flex;
+            flex-direction: column;
         }
 
         .sidebar-title {
@@ -105,7 +103,26 @@
             border-left: 3px solid var(--line-color);
         }
 
-        /* 主内容 */
+        /* 侧边栏按钮 放分类下面 */
+        .sidebar-btn {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .sidebar-btn a {
+            padding: 10px 22px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--btn-text);
+            text-decoration: none;
+        }
+
+        .sidebar-btn a:hover {
+            background: var(--btn-hover-bg);
+            color: var(--btn-hover-text);
+        }
+
+        /* 主内容区 */
         .main-content {
             flex: 1;
             background: var(--card-bg);
@@ -113,10 +130,10 @@
             border-radius: 10px;
             padding: 40px 30px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            text-align: center;
         }
 
         h1 {
-            text-align: center;
             font-size: 26px;
             margin-bottom: 25px;
             padding-bottom: 15px;
@@ -128,13 +145,11 @@
             width: 100%;
             max-width: 520px;
             height: auto;
-            display: block;
-            margin: 0 auto 30px;
             border-radius: 12px;
+            margin: 0 auto 30px;
         }
 
         .poem {
-            text-align: center;
             margin: 30px 0;
         }
 
@@ -156,37 +171,19 @@
         }
 
         .divider {
-            text-align: center;
             margin: 25px 0;
             color: var(--line-color);
         }
 
         .intro {
-            text-align: center;
             font-size: 17px;
             line-height: 1.8;
-            margin: 20px 0;
         }
 
-        .btn {
-            display: block;
-            width: fit-content;
-            margin: 30px auto 0;
-            padding: 10px 22px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--btn-text);
-            text-decoration: none;
-        }
-
-        .btn:hover {
-            background: var(--btn-hover-bg);
-            color: var(--btn-hover-text);
-        }
-
+        /* 页脚放最底部居中 */
         footer {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 40px;
             font-size: 14px;
             color: var(--line-color);
         }
@@ -214,7 +211,7 @@
     <div class="mode-toggle" id="modeBtn">入夜观月</div>
 
     <div class="wrapper">
-        <!-- 左侧分类 -->
+        <!-- 左侧分类 + 踩一踩按钮在分类下面 -->
         <div class="sidebar">
             <div class="sidebar-title">2026年随记</div>
 
@@ -230,14 +227,21 @@
             <div class="menu-group">
                 <div class="menu-main">立冬 • 大寒</div>
             </div>
+
+            <!-- 踩一踩 放在左侧分类最下面 -->
+            <div class="sidebar-btn">
+                <a href="#">踩一踩 🐾</a>
+            </div>
         </div>
 
-        <!-- 右侧内容 -->
+        <!-- 主内容：标题→图片→诗句→文案 全部居中 -->
         <div class="main-content">
             <h1>snowy随记 · 二零二六年</h1>
 
+            <!-- 标题下面 图片居中 -->
             <img class="mid-img" src="DSC01331.JPG" alt="古风配图">
 
+            <!-- 图片下面 诗句居中 -->
             <div class="poem">
                 <div class="poem-line">青山隐隐水迢迢，</div>
                 <div class="poem-line">秋尽江南草未凋。</div>
@@ -247,14 +251,14 @@
 
             <div class="divider">—— · ——</div>
 
+            <!-- 这句文字居中 -->
             <p class="intro">
                 静看云卷云舒，坐听花落鸟鸣，于尘世一隅中，观宇宙思缥缈。
             </p>
-
-            <a href="#" class="btn">踩一踩 🐾</a>
         </div>
     </div>
 
+    <!-- 丙午年·夏记 放整个页面最底下居中 -->
     <footer>丙午年 · 夏记</footer>
 
     <script>
