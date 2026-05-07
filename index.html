@@ -3,196 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>snowy随记 · 昼夜版</title>
+    <title>snowy随记 · 2026</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease;
+            transition: all 0.5s ease;
         }
 
         :root {
             --bg-main: #f5f0e6;
-            --card-bg: rgba(255,255,255,0.85);
-            --text-color: #444;
+            --card-bg: rgba(255,255,255,0.9);
+            --text-color: #333;
             --poem-color: #5a4a3c;
             --border-color: #d4c7b0;
             --line-color: #b8a68f;
-            --btn-bg: transparent;
             --btn-text: #5a4a3c;
             --btn-hover-bg: #8b7d6b;
             --btn-hover-text: #fff;
-            --sidebar-bg: rgba(245,240,230,0.9);
-            --sidebar-item: #6d5b53
+            --sidebar-bg: #f9f5f0;
+            --sidebar-item: #6d5b53;
         }
 
         body.dark {
             --bg-main: #0c141c;
-            --card-bg: rgba(15,22,30,0.85);
-            --text-color: #c9d1d9;
-            --poem-color: #a8b9cc;
+            --card-bg: rgba(15,22,30,0.9);
+            --text-color: #e0e6ed;
+            --poem-color: #c0cddf;
             --border-color: #2a3b4c;
             --line-color: #4a5b6c;
-            --btn-bg: transparent;
-            --btn-text: #a8b9cc;
-            --btn-hover-bg: #2a3b4c;
-            --btn-hover-text: #e6edf5;
-            --sidebar-bg: rgba(15,22,30,0.9);
-            --sider-item: #c9d1d9
+            --btn-text: #c9d1d9;
+            --btn-hover-bg: #3a4b5c;
+            --btn-hover-text: #fff;
+            --sidebar-bg: #121a24;
+            --sidebar-item: #c9d1d9;
         }
 
         body {
             font-family: "KaiTi", "STKaiti", "SimSun", serif;
-            background-color: var(--bg-main);
+            background: var(--bg-main);
             color: var(--text-color);
             min-height: 100vh;
-            padding: 2rem 1rem;
+            padding: 20px;
             display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
         }
 
         .mode-toggle {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 6px 14px;
+            top: 15px;
+            right: 15px;
+            padding: 6px 12px;
             border: 1px solid var(--border-color);
-            border-radius: 20px;
+            border-radius: 30px;
             background: var(--card-bg);
-            cursor: pointer;
-            font-size: 14px;
-            letter-spacing: 2px;
             color: var(--text-color);
-            z-index: 999;
+            font-size: 14px;
+            cursor: pointer;
+            z-index: 100;
         }
 
-        /* ========= 左侧分类栏 ========= */
+        /* 布局：电脑左右，手机上下 */
+        .wrapper {
+            display: flex;
+            gap: 25px;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+            align-items: flex-start;
+        }
+
+        /* 左侧分类 */
         .sidebar {
-            width: 180px;
-            background: var(--border-xolor);
+            width: 220px;
+            background: var(--sidebar-bg);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            height: fit-content;
+            border-radius: 10px;
+            padding: 25px 20px;
             position: sticky;
-            top: 40px;
-            flex-shrink: 0;
+            top: 30px;
         }
 
         .sidebar-title {
-            font-size: 1.1rem;
-            color: var(--text-color);
-            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed var(--line-color);
         }
 
         .menu-group {
-            margin: 0.8rem 0;
+            margin-bottom: 14px;
         }
 
         .menu-main {
-            font-size: 1rem;
+            font-size: 16px;
             color: var(--poem-color);
-            margin-bottom: 0.4rem;
-            padding-left: 0.3rem;
-            border-left: 2px solid var(--border-color);
+            padding-left: 8px;
+            border-left: 3px solid var(--line-color);
         }
 
-        .menu-sub {
-            list-style: none;
-            padding-left: 0.8rem;
-        }
-
-        .menu-sub li {
-            font-size: 0.9rem;
-            color: var(--sidebar-item);
-            margin: 0.3rem 0;
-            cursor: pointer;
-        }
-
-        .menu-sub li:hover {
-            color: var(--btn-hover-bg);
-        }
-
-        /* ========= 主内容区 ========= */
+        /* 主内容 */
         .main-content {
-            max-width: 700px;
             flex: 1;
             background: var(--card-bg);
-            padding: 3rem 2rem;
             border: 1px solid var(--border-color);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            border-radius: 6px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .container::before {
-            content: "";
-            position: absolute;
-            left: 2rem;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: var(--line-color);
-        }
-
-        .seal {
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 2rem;
-            border: 3px solid #a82020;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            color: #a82020;
-            transform: rotate(-10deg);
-            letter-spacing: 4px;
-            background: rgba(168,32,32,0.05);
-        }
-
-        body.dark .seal {
-            border-color: #c83030;
-            color: #c83030;
+            border-radius: 10px;
+            padding: 40px 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
 
         h1 {
-            font-size: 2.2rem;
-            color: var(--text-color);
             text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
+            font-size: 26px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
             border-bottom: 1px dashed var(--line-color);
-            letter-spacing: 0.2em;
+            letter-spacing: 2px;
         }
 
-        /* 中间古风图片样式：自适应+居中+圆角 */
         .mid-img {
             width: 100%;
-            max-width: 550px;
+            max-width: 520px;
             height: auto;
             display: block;
-            margin: 0 auto 2.5rem;
+            margin: 0 auto 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
 
         .poem {
-            margin: 2.5rem 0;
-        }
-        .poem-line {
-            font-size: 1.3rem;
             text-align: center;
-            color: var(--poem-color);
-            line-height: 2.2;
+            margin: 30px 0;
+        }
+
+        .poem-line {
+            font-size: 19px;
+            line-height: 2;
             opacity: 0;
-            transform: translateY(15px);
-            animation: fadeInUp 1s ease forwards;
+            transform: translateY(10px);
+            animation: fadeIn 1s forwards;
         }
 
         .poem-line:nth-child(1) { animation-delay: 0.2s; }
@@ -200,115 +151,117 @@
         .poem-line:nth-child(3) { animation-delay: 0.6s; }
         .poem-line:nth-child(4) { animation-delay: 0.8s; }
 
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .divider {
             text-align: center;
-            margin: 2rem 0;
+            margin: 25px 0;
             color: var(--line-color);
-            font-size: 1.5rem;
         }
 
         .intro {
-            font-size: 1.1rem;
-            margin: 2rem 0;
-            line-height: 1.8;
             text-align: center;
+            font-size: 17px;
+            line-height: 1.8;
+            margin: 20px 0;
         }
 
         .btn {
             display: block;
             width: fit-content;
-            margin: 2rem auto 0;
-            padding: 0.8rem 2rem;
+            margin: 30px auto 0;
+            padding: 10px 22px;
             border: 1px solid var(--border-color);
+            border-radius: 6px;
             color: var(--btn-text);
             text-decoration: none;
-            border-radius: 2px;
-            letter-spacing: 0.1em;
         }
 
         .btn:hover {
-            background-color: var(--btn-hover-bg);
+            background: var(--btn-hover-bg);
             color: var(--btn-hover-text);
         }
 
         footer {
             text-align: center;
-            margin-top: 3rem;
+            margin-top: 20px;
+            font-size: 14px;
             color: var(--line-color);
-            font-size: 0.9rem;
         }
 
-         @media (max-width: 900px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; position: static; }
+        /* 手机自适应 */
+        @media (max-width: 768px) {
+            .wrapper {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: static;
+            }
+            .main-content {
+                padding: 25px 20px;
+            }
+            h1 {
+                font-size: 22px;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="mode-toggle" id="modeBtn">入夜观月</div>
 
-     <!-- ========= 左侧分类栏 ========= -->
-    <div class="sidebar">
-        <div class="sidebar-title">2026年</div>
+    <div class="wrapper">
+        <!-- 左侧分类 -->
+        <div class="sidebar">
+            <div class="sidebar-title">2026年随记</div>
 
-        <div class="menu-group">
-            <div class="menu-main">立春 谷雨</div>
+            <div class="menu-group">
+                <div class="menu-main">立春 • 谷雨</div>
+            </div>
+            <div class="menu-group">
+                <div class="menu-main">立夏 • 大暑</div>
+            </div>
+            <div class="menu-group">
+                <div class="menu-main">立秋 • 霜降</div>
+            </div>
+            <div class="menu-group">
+                <div class="menu-main">立冬 • 大寒</div>
+            </div>
         </div>
 
-        <div class="menu-group">
-            <div class="menu-main">立夏 大暑</div>
-        </div>
+        <!-- 右侧内容 -->
+        <div class="main-content">
+            <h1>snowy随记 · 二零二六年</h1>
 
-        <div class="menu-group">
-            <div class="menu-main">立秋 霜降</div>
-        </div>
+            <img class="mid-img" src="DSC01331.JPG" alt="古风配图">
 
-        <div class="menu-group">
-            <div class="menu-main">立冬 大寒</div>
-            <ul class="menu-sub">
+            <div class="poem">
+                <div class="poem-line">青山隐隐水迢迢，</div>
+                <div class="poem-line">秋尽江南草未凋。</div>
+                <div class="poem-line">二十四桥明月夜，</div>
+                <div class="poem-line">玉人何处教吹箫。</div>
+            </div>
+
+            <div class="divider">—— · ——</div>
+
+            <p class="intro">
+                静看云卷云舒，坐听花落鸟鸣，于尘世一隅中，观宇宙思缥缈。
+            </p>
+
+            <a href="#" class="btn">踩一踩 🐾</a>
         </div>
     </div>
 
-    <!-- ========= 主内容 ========= -->
-        <h1>snowy随记 · 二零二六年</h1>
-
-        <!-- 中间插入图片 👇 把 gufeng.jpg 改成你自己的图片文件名 -->
-        <img class="mid-img" src="DSC01331.JPG" alt="古风配图">
-
-        <div class="poem">
-            <div class="poem-line">青山隐隐水迢迢，</div>
-            <div class="poem-line">秋尽江南草未凋。</div>
-            <div class="poem-line">二十四桥明月夜，</div>
-            <div class="poem-line">玉人何处教吹箫。</div>
-        </div>
-
-        <div class="divider">—— · ——</div>
-
-        <p class="intro">
-            静看云卷云舒，坐听花落鸟鸣，于尘世一隅中，观宇宙思缥缈。
-        </p>
-
-        <a href="#" class="btn">踩一踩 🐾</a>
-    </div>
-
-    <footer>
-        丙午年 · 夏记
-    </footer>
+    <footer>丙午年 · 夏记</footer>
 
     <script>
-        const modeBtn = document.getElementById('modeBtn');
-        const body = document.body;
-
-        modeBtn.addEventListener('click', () => {
-            body.classList.toggle('dark');
-            modeBtn.innerText = body.classList.contains('dark') ? '白日宣纸' : '入夜观月';
+        const btn = document.getElementById('modeBtn');
+        btn.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            btn.innerText = document.body.classList.contains('dark') ? '白日宣纸' : '入夜观月';
         });
     </script>
 </body>
