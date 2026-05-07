@@ -23,6 +23,8 @@
             --btn-text: #5a4a3c;
             --btn-hover-bg: #8b7d6b;
             --btn-hover-text: #fff;
+            --sidebar-bg: rgba(245,240,230,0.9);
+            --sidebar-item: #6d5b53
         }
 
         body.dark {
@@ -36,6 +38,8 @@
             --btn-text: #a8b9cc;
             --btn-hover-bg: #2a3b4c;
             --btn-hover-text: #e6edf5;
+            --sidebar-bg: rgba(15,22,30,0.9);
+            --sider-item: #c9d1d9
         }
 
         body {
@@ -44,6 +48,10 @@
             color: var(--text-color);
             min-height: 100vh;
             padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
         }
 
         .mode-toggle {
@@ -61,9 +69,50 @@
             z-index: 999;
         }
 
+        /* ========= 左侧分类栏 ========= */
+        .sidebar {
+            width: 240px;
+            background: var(--border-xolor);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 40px;
+        }
+
+        .menu-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .menu-main {
+            font-size: 1.1rem;
+            color: var(--poem-color);
+            margin-bottom: 0.6rem;
+            padding-left: 0.4rem;
+            border-left: 3px solid var(--line-color);
+        }
+
+        .menu-sub {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        .menu-sub li {
+            font-size: 1rem;
+            color: var(--sidebar-item);
+            margin: 0.4rem 0;
+            cursor: pointer;
+        }
+
+        .menu-sub li:hover {
+            color: var(--btn-hover-bg);
+        }
+
+        /* ========= 主内容区 ========= */
         .container {
             max-width: 700px;
-            margin: 0 auto;
+            flex: 1;
             background: var(--card-bg);
             padding: 3rem 2rem;
             border: 1px solid var(--border-color);
@@ -161,7 +210,7 @@
             font-size: 1.1rem;
             margin: 2rem 0;
             line-height: 1.8;
-            text-align:center;
+            text-align: center;
         }
 
         .btn {
@@ -187,12 +236,54 @@
             color: var(--line-color);
             font-size: 0.9rem;
         }
+
+         @media (max-width: 900px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; position: static; }
+        }
     </style>
 </head>
 <body>
     <div class="mode-toggle" id="modeBtn">入夜观月</div>
 
+     <!-- ========= 左侧分类栏 ========= -->
+    <div class="sidebar">
+        <div class="sidebar-title">2026年随记</div>
 
+        <div class="menu-group">
+            <div class="menu-main">春</div>
+            <ul class="menu-sub">
+                <li>立春</li>
+                <li>谷雨</li>
+            </ul>
+        </div>
+
+        <div class="menu-group">
+            <div class="menu-main">夏</div>
+            <ul class="menu-sub">
+                <li>立夏</li>
+                <li>大暑</li>
+            </ul>
+        </div>
+
+        <div class="menu-group">
+            <div class="menu-main">秋</div>
+            <ul class="menu-sub">
+                <li>立秋</li>
+                <li>霜降</li>
+            </ul>
+        </div>
+
+        <div class="menu-group">
+            <div class="menu-main">冬</div>
+            <ul class="menu-sub">
+                <li>立冬</li>
+                <li>大寒</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ========= 主内容 ========= -->
         <h1>snowy随记</h1>
 
         <!-- 中间插入图片 👇 把 gufeng.jpg 改成你自己的图片文件名 -->
@@ -211,7 +302,7 @@
             静看云卷云舒，坐听花落鸟鸣，于尘世一隅中，观宇宙思缥缈。
         </p>
 
-        <a href="#" class="btn">点我</a>
+        <a href="#" class="btn">点我留言</a>
     </div>
 
     <footer>
