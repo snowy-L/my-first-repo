@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>古风雅韵 · 昼夜版</title>
+    <title>snowy随记 · 昼夜版</title>
     <style>
         * {
             margin: 0;
@@ -25,7 +25,6 @@
             --btn-hover-text: #fff;
         }
 
-        /* 夜间模式 */
         body.dark {
             --bg-main: #0c141c;
             --card-bg: rgba(15,22,30,0.85);
@@ -47,7 +46,6 @@
             padding: 2rem 1rem;
         }
 
-        /* 昼夜切换按钮 */
         .mode-toggle {
             position: fixed;
             top: 20px;
@@ -75,7 +73,6 @@
             overflow: hidden;
         }
 
-        /* 左侧古籍装订线 */
         .container::before {
             content: "";
             position: absolute;
@@ -86,7 +83,6 @@
             background: var(--line-color);
         }
 
-        /* 水墨印章 */
         .seal {
             width: 90px;
             height: 90px;
@@ -118,7 +114,17 @@
             letter-spacing: 0.2em;
         }
 
-        /* 诗词每一句 */
+        /* 中间古风图片样式：自适应+居中+圆角 */
+        .mid-img {
+            width: 100%;
+            max-width: 550px;
+            height: auto;
+            display: block;
+            margin: 0 auto 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
         .poem {
             margin: 2.5rem 0;
         }
@@ -132,11 +138,10 @@
             animation: fadeInUp 1s ease forwards;
         }
 
-        /* 逐句延迟 */
-        .poem-line:nth-child(1) { animation-delay: 0.6s; }
-        .poem-line:nth-child(2) { animation-delay: 1s; }
-        .poem-line:nth-child(3) { animation-delay: 1.5s; }
-        .poem-line:nth-child(4) { animation-delay: 2s; }
+        .poem-line:nth-child(1) { animation-delay: 0.2s; }
+        .poem-line:nth-child(2) { animation-delay: 0.6s; }
+        .poem-line:nth-child(3) { animation-delay: 1s; }
+        .poem-line:nth-child(4) { animation-delay: 1.4s; }
 
         @keyframes fadeInUp {
             to {
@@ -185,14 +190,15 @@
     </style>
 </head>
 <body>
-    <!-- 昼夜切换按钮 -->
     <div class="mode-toggle" id="modeBtn">入夜观月</div>
 
     <div class="container">
-        <!-- 水墨印章 -->
-        <div class="seal">snowy</div>
+        <div class="seal">雅韵</div>
 
-        <h1>snowy的随记</h1>
+        <h1>古风雅韵</h1>
+
+        <!-- 中间插入图片 👇 把 gufeng.jpg 改成你自己的图片文件名 -->
+        <img class="mid-img" src="DSC01331.JPG" alt="古风配图">
 
         <div class="poem">
             <div class="poem-line">青山隐隐水迢迢，</div>
@@ -204,7 +210,7 @@
         <div class="divider">—— · ——</div>
 
         <p class="intro">
-            静看云卷云舒，坐听花落鸟鸣，于尘世一隅，观宇宙思缥缈。
+            静看云卷云舒，坐听花落鸟鸣，于尘世一隅中，观宇宙思缥缈。
         </p>
 
         <a href="#" class="btn">闲览随笔</a>
@@ -215,17 +221,12 @@
     </footer>
 
     <script>
-        // 昼夜切换
         const modeBtn = document.getElementById('modeBtn');
         const body = document.body;
 
         modeBtn.addEventListener('click', () => {
             body.classList.toggle('dark');
-            if(body.classList.contains('dark')){
-                modeBtn.innerText = '白日宣纸';
-            }else{
-                modeBtn.innerText = '入夜观月';
-            }
+            modeBtn.innerText = body.classList.contains('dark') ? '白日宣纸' : '入夜观月';
         });
     </script>
 </body>
