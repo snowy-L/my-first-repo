@@ -52,6 +52,7 @@
             justify-content: center;
             gap: 2rem;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .mode-toggle {
@@ -71,37 +72,44 @@
 
         /* ========= 左侧分类栏 ========= */
         .sidebar {
-            width: 240px;
+            width: 180px;
             background: var(--border-xolor);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 2rem 1.5rem;
+            padding: 1.5rem;
             height: fit-content;
             position: sticky;
             top: 40px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
         }
 
         .menu-group {
-            margin-bottom: 1.2rem;
+            margin: 0.8rem 0;
         }
 
         .menu-main {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--poem-color);
-            margin-bottom: 0.6rem;
-            padding-left: 0.4rem;
-            border-left: 3px solid var(--line-color);
+            margin-bottom: 0.4rem;
+            padding-left: 0.3rem;
+            border-left: 2px solid var(--border-color);
         }
 
         .menu-sub {
             list-style: none;
-            padding-left: 1rem;
+            padding-left: 0.8rem;
         }
 
         .menu-sub li {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--sidebar-item);
-            margin: 0.4rem 0;
+            margin: 0.3rem 0;
             cursor: pointer;
         }
 
@@ -110,7 +118,7 @@
         }
 
         /* ========= 主内容区 ========= */
-        .container {
+        .main-content {
             max-width: 700px;
             flex: 1;
             background: var(--card-bg);
@@ -251,35 +259,20 @@
         <div class="sidebar-title">2026年随记</div>
 
         <div class="menu-group">
-            <div class="menu-main">春</div>
-            <ul class="menu-sub">
-                <li>立春</li>
-                <li>谷雨</li>
-            </ul>
+            <div class="menu-main">立春 谷雨</div>
         </div>
 
         <div class="menu-group">
-            <div class="menu-main">夏</div>
-            <ul class="menu-sub">
-                <li>立夏</li>
-                <li>大暑</li>
-            </ul>
+            <div class="menu-main">立夏 大暑</div>
         </div>
 
         <div class="menu-group">
-            <div class="menu-main">秋</div>
-            <ul class="menu-sub">
-                <li>立秋</li>
-                <li>霜降</li>
-            </ul>
+            <div class="menu-main">立秋 霜降</div>
         </div>
 
         <div class="menu-group">
-            <div class="menu-main">冬</div>
+            <div class="menu-main">立冬 大寒</div>
             <ul class="menu-sub">
-                <li>立冬</li>
-                <li>大寒</li>
-            </ul>
         </div>
     </div>
 
