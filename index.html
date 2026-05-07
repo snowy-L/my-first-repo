@@ -50,11 +50,13 @@
             overflow-x: hidden;
         }
 
+        /* 修复星星看不见：设置高度 100% */
         .star-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
+            height: 100%;
             pointer-events: none;
             z-index: -1;
             display: none;
@@ -78,10 +80,10 @@
             position: absolute;
             background: #ffffff;
             border-radius: 50%;
-            animation: twinkle 3s infinite ease-in;
+            animation: twinkle 3s infinite ease-in-out;
         }
         @keyframes twinkle {
-            0%,100% { opacity: 0.2;}
+            0%,100% { opacity: 0.3;}
             50% { opacity: 1;}
         }
     
@@ -90,7 +92,7 @@
             top: 15px;
             right: 15px;
             padding: 6px 12px;
-            border: 1px solid var(--border-color);
+            border: 1px var(--border-color);
             border-radius: 30px;
             background: var(--card-bg);
             color: var(--text-color);
@@ -105,10 +107,9 @@
             max-width: 1000px;
             margin: 0 auto;
             width: 100%;
-            align-items: stretch; /* 左右高度自动对齐 */
+            align-items: stretch;
         }
 
-        /* 左侧侧边栏 加宽、和右侧等高 */
         .sidebar {
             width: 240px;
             background: var(--sidebar-bg);
@@ -134,7 +135,6 @@
             letter-spacing: 2px;
         }
 
-        /* 分类可点击样式 */
         .menu-group {
             margin-bottom: 18px;
         }
@@ -156,7 +156,6 @@
             border-color: var(--border-color);
         }
 
-        /* 左侧按钮统一样式 */
         .sidebar-btn {
             margin-top: 20px;
             text-align: center;
@@ -178,7 +177,6 @@
             color: var(--btn-hover-text);
         }
 
-        /* 左侧底部小图预留位置 */
         .sidebar-img {
             width: 100%;
             height: auto;
@@ -187,7 +185,6 @@
             border: 1px solid var(--border-color);
         }
 
-        /* 主内容区 */
         .main-content {
             flex: 1;
             background: var(--card-bg);
@@ -205,6 +202,13 @@
             border-bottom: 1px dashed var(--line-color);
             letter-spacing: 2px;
         }
+
+        /* 白天默认图 */
+        .img-day { display: block; }
+        /* 夜晚替换图 */
+        .img-night { display: none; }
+        body.dark .img-day { display: none; }
+        body.dark .img-night { display: block; }
 
         .mid-img {
             width: 100%;
@@ -254,7 +258,6 @@
             letter-spacing: 1px;
         }
 
-        /* 手机自适应 */
         @media (max-width: 768px) {
             .wrapper {
                 flex-direction: column;
@@ -273,7 +276,6 @@
 </head>
 
 <body>
-    <!-- 黑夜星空+月亮背景 只在暗夜模式显示 -->
     <div class="star-bg">
         <div class="moon"></div>
     </div>
@@ -281,7 +283,6 @@
     <div class="mode-toggle" id="modeBtn">入夜观月</div>
 
     <div class="wrapper">
-        <!-- 左侧栏 -->
         <div class="sidebar">
             <div class="sidebar-top">
                 <div class="sidebar-title">2026年随记</div>
@@ -304,21 +305,23 @@
                 </div>
             </div>
 
-            <!-- 左下新增小图 后续把 small.jpg 换成你上传的图片名即可 -->
             <img class="sidebar-img" src="flower.png" alt="侧边小图">
         </div>
 
-        <!-- 主内容区 -->
         <div class="main-content">
             <h1>snowy随记 · 二零二六年</h1>
 
-            <img class="mid-img" src="DSC01331.JPG" alt="古风配图">
+            <!-- 白天图片 -->
+            <img class="mid-img img-day" src="DSC01331.JPG" alt="日间图">
+            <!-- 夜晚替换图片 你把 night.jpg 改成你上传的名字即可 -->
+            <img class="mid-img img-night" src="night.jpg" alt="夜晚图">
 
+            <!-- 你要的春江花月夜诗句 -->
             <div class="poem">
-                <div class="poem-line">布衣何用揖王公，</div>
-                <div class="poem-line">归向芦根濯软红。</div>
-                <div class="poem-line">自觉此心无一事，</div>
-                <div class="poem-line">小鱼跳出绿萍中。</div>
+                <div class="poem-line">江天一色无纤尘，</div>
+                <div class="poem-line">皎皎空中孤月轮。</div>
+                <div class="poem-line">江畔何人初见月？</div>
+                <div class="poem-line">江月何年初照人？</div>
             </div>
 
             <div class="divider">—— · ——</div>
@@ -332,21 +335,17 @@
     <footer>丙午年 · 夏记</footer>
 
     <script>
-        // 自动生成随机星星
         function createStars() {
             const starBg = document.querySelector('.star-bg');
-            const count = 80; // 星星数量
-            for(let i = 0; i < count; i++){
+            const count = 100;
+            for(let i=0;i<count;i++){
                 const star = document.createElement('div');
                 star.className = 'star';
-                // 随机大小
-                let size = Math.random() * 2 + 1;
+                let size = Math.random() * 2.5 + 1;
                 star.style.width = size + 'px';
                 star.style.height = size + 'px';
-                // 随机位置
                 star.style.left = Math.random() * 100 + '%';
                 star.style.top = Math.random() * 100 + '%';
-                // 随机闪烁延迟
                 star.style.animationDelay = Math.random() * 3 + 's';
                 starBg.appendChild(star);
             }
