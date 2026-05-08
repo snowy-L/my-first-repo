@@ -50,7 +50,7 @@
             overflow-x: hidden;
         }
 
-        /* 修复星星看不见：设置高度 100% */
+        /* 发光星星 - 页面最顶层 */
         .star-container {
             position: fixed;
             top: 0;
@@ -73,39 +73,17 @@
             animation: twinkle 2.5s infinite alternate ease-in-out;
         }
 
-        .moon {
-            position: absolute;
-            top: 60px;
-            right:80px;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: #fffbd5;
-            box-shadow: 0 0 30px #fffbd5, 0 0 60px rgba(255,251,213,0.6);
-        }
-
-        .shining-star {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 0 10px white, 0 0 20px white, 0 0 30px white;
-            animation: twinkle 2.5s infinite alternate ease-in-out;
-            animation: twinkle 3s infinite ease-in-out;
-        }
-
         @keyframes twinkle {
-            0%,100% { opacity: 0.3;}
-            50% { opacity: 1;}
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
         }
-    
+
         .mode-toggle {
             position: fixed;
             top: 15px;
             right: 15px;
             padding: 6px 12px;
-            border: 1px var(--border-color);
+            border: 1px solid var(--border-color);
             border-radius: 30px;
             background: var(--card-bg);
             color: var(--text-color);
@@ -221,13 +199,6 @@
         body.dark .img-day { display: none; }
         body.dark .img-night { display: block; }
 
-        /* 白天默认图 */
-        .img-day { display: block; }
-        /* 夜晚替换图 */
-        .img-night { display: none; }
-        body.dark .img-day { display: none; }
-        body.dark .img-night { display: block; }
-
         .mid-img {
             width: 100%;
             max-width: 520px;
@@ -294,11 +265,9 @@
 </head>
 
 <body>
-    <!-- 黑夜星空+月亮背景 只在暗夜模式显示 -->
-    <div class="star-container">
-    <div class="star-bg">
-        <div class="moon"></div>
-    </div>
+
+    <!-- 顶层发光星星 -->
+    <div class="star-container"></div>
 
     <div class="mode-toggle" id="modeBtn">入夜观月</div>
 
@@ -352,10 +321,11 @@
     <footer>丙午年 · 夏记</footer>
 
     <script>
+        // 生成发光星星
         function createStars() {
-            const starBg = document.querySelector('.star-container');
+            const container = document.querySelector('.star-container');
             const count = 60;
-            for(let i=0;i<count;i++){
+            for (let i = 0; i < count; i++) {
                 const star = document.createElement('div');
                 star.classList.add('shining-star');
                 let size = Math.random() * 2 + 2;
@@ -367,8 +337,9 @@
                 container.appendChild(star);
             }
         }
-        createShiningStars();
+        createStars();
 
+        // 黑夜模式切换（已修复）
         const btn = document.getElementById('modeBtn');
         btn.addEventListener('click', () => {
             document.body.classList.toggle('dark');
