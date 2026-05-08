@@ -12,7 +12,6 @@
             box-sizing: border-box;
         }
 
-        /* 全局变量设计 */
         :root {
             --bg-main: #f5f0e6;
             --card-bg: rgba(255, 255, 255, 0.92);
@@ -54,7 +53,6 @@
             transition: background 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
-        /* ---------- 星空容器（懒加载生成）---------- */
         .star-container {
             position: fixed;
             top: 0;
@@ -69,7 +67,6 @@
             display: block;
         }
 
-        /* 星星绽放效果 */
         .shining-star {
             position: absolute;
             background: #ffffff;
@@ -83,7 +80,6 @@
             100% { opacity: 1; transform: scale(1.2); }
         }
 
-        /* 流星拖尾 */
         .meteor {
             position: absolute;
             width: 100px;
@@ -101,7 +97,7 @@
             100% { transform: translateX(-550px) translateY(520px); opacity: 0; }
         }
 
-        /* ---------- 右上角月亮（仅暗色模式优雅显现）---------- */
+        /* 右上角月亮 ✅ */
         .night-moon {
             position: fixed;
             top: 20px;
@@ -116,7 +112,6 @@
             opacity: 0;
             transition: opacity 0.7s ease, transform 0.6s ease;
             transform: scale(0.92);
-            /* 仿月坑纹理 */
             background-image: radial-gradient(circle at 25% 40%, rgba(160, 120, 70, 0.12) 2%, transparent 2.5%),
                               radial-gradient(circle at 70% 65%, rgba(120, 85, 45, 0.1) 1.8%, transparent 2%);
             background-size: 22px 22px, 32px 32px;
@@ -132,7 +127,6 @@
             100% { transform: translateY(-5px) scale(1.02); }
         }
 
-        /* 切换按钮 - 优化位置避免月亮阻挡 */
         .mode-toggle {
             position: fixed;
             top: 26px;
@@ -160,7 +154,6 @@
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
         }
 
-        /* 主容器布局 */
         .wrapper {
             display: flex;
             gap: 28px;
@@ -170,7 +163,6 @@
             align-items: stretch;
         }
 
-        /* 侧边栏 艺术质感 */
         .sidebar {
             width: 250px;
             background: var(--sidebar-bg);
@@ -255,7 +247,6 @@
             filter: brightness(0.7) contrast(1.1) sepia(0.1);
         }
 
-        /* 主内容卡片 */
         .main-content {
             flex: 1;
             background: var(--card-bg);
@@ -277,7 +268,6 @@
             font-weight: 450;
         }
 
-        /* 昼夜双图切换无闪烁优化 */
         .img-day { display: block; }
         .img-night { display: none; }
         body.dark .img-day { display: none; }
@@ -293,7 +283,13 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
 
-        /* 诗词区域动画 */
+        /* 白天诗词 ✅ */
+        .poem-day { display: block; }
+        /* 夜晚诗词 ✅ */
+        .poem-night { display: none; }
+        body.dark .poem-day { display: none; }
+        body.dark .poem-night { display: block; }
+
         .poem {
             margin: 30px 0 20px;
         }
@@ -339,7 +335,6 @@
             opacity: 0.75;
         }
 
-        /* 响应式设计 · 精致移动端 */
         @media (max-width: 780px) {
             body { padding: 14px; }
             .wrapper { flex-direction: column; gap: 18px; }
@@ -363,57 +358,43 @@
             .mode-toggle { right: 10px; top: 18px; }
             .sidebar-top { justify-content: center; }
         }
-
-        /* 辅助交互：聚焦可见 */
-        .mode-toggle:focus-visible, .menu-main:focus-visible {
-            outline: 2px solid var(--line-color);
-            outline-offset: 2px;
-        }
     </style>
 </head>
 <body>
 
-    <!-- 星空画布（只会在夜间首次生成，优化性能） -->
     <div class="star-container"></div>
-
-    <!-- 右上角装饰孤月：仅暗夜显现 -->
-    <div class="night-moon" aria-hidden="true"></div>
-
-    <!-- 模式切换优雅开关 -->
-    <button class="mode-toggle" id="modeBtn" aria-label="切换日间与夜间模式">入夜观月</button>
+    <div class="night-moon"></div>
+    <button class="mode-toggle" id="modeBtn">入夜观月</button>
 
     <div class="wrapper">
         <aside class="sidebar">
             <div class="sidebar-top">
                 <div class="sidebar-title">❀ 2026 岁时记 ❀</div>
-                <div class="menu-group">
-                    <a href="javascript:void(0)" class="menu-main">🌱 立春·谷雨</a>
-                </div>
-                <div class="menu-group">
-                    <a href="javascript:void(0)" class="menu-main">🌺 立夏·大暑</a>
-                </div>
-                <div class="menu-group">
-                    <a href="javascript:void(0)" class="menu-main">🍂 立秋·霜降</a>
-                </div>
-                <div class="menu-group">
-                    <a href="javascript:void(0)" class="menu-main">❄️ 立冬·大寒</a>
-                </div>
-                <div class="sidebar-btn">
-                    <a href="javascript:void(0)" aria-label="互动小脚印">🐾 踩一踩</a>
-                </div>
+                <div class="menu-group"><a href="javascript:void(0)" class="menu-main">🌱 立春·谷雨</a></div>
+                <div class="menu-group"><a href="javascript:void(0)" class="menu-main">🌺 立夏·大暑</a></div>
+                <div class="menu-group"><a href="javascript:void(0)" class="menu-main">🍂 立秋·霜降</a></div>
+                <div class="menu-group"><a href="javascript:void(0)" class="menu-main">❄️ 立冬·大寒</a></div>
+                <div class="sidebar-btn"><a href="javascript:void(0)">🐾 踩一踩</a></div>
             </div>
-            <img class="sidebar-img" src="flower.png" alt="侧边雅致花卉" loading="lazy">
+            <img class="sidebar-img" src="flower.png" alt="花卉">
         </aside>
 
         <main class="main-content">
             <h1>snowy随记 · 二零二六年</h1>
 
-            <picture>
-                <img class="mid-img img-day" src="DSC01331.JPG" alt="白日山光水色" loading="eager">
-                <img class="mid-img img-night" src="moon.png" alt="静谧夜月诗意" loading="eager">
-            </picture>
+            <img class="mid-img img-day" src="DSC01331.JPG" alt="白日景色">
+            <img class="mid-img img-night" src="moon.png" alt="夜景">
 
-            <div class="poem">
+            <!-- 白天诗词 ✅ -->
+            <div class="poem poem-day">
+                <div class="poem-line">青山隐隐水迢迢，</div>
+                <div class="poem-line">秋尽江南草未凋。</div>
+                <div class="poem-line">二十四桥明月夜，</div>
+                <div class="poem-line">玉人何处教吹箫。</div>
+            </div>
+
+            <!-- 夜晚诗词 ✅ -->
+            <div class="poem poem-night">
                 <div class="poem-line">江天一色无纤尘，</div>
                 <div class="poem-line">皎皎空中孤月轮。</div>
                 <div class="poem-line">江畔何人初见月？</div>
@@ -421,42 +402,28 @@
             </div>
 
             <div class="divider">✧ 今月曾照古时人 ✧</div>
-
-            <p class="intro">
-                静看云卷云舒，坐听花落鸟鸣，于尘世一隅中，观宇宙思缥缈。
-            </p>
+            <p class="intro">静看云卷云舒，坐听花落鸟鸣，于尘世一隅中，观宇宙思缥缈。</p>
         </main>
     </div>
 
     <footer>丙午年 · 夏夜星河记</footer>
 
     <script>
-        // ---------- 性能优化关键：懒加载星空 & 流星（仅暗色模式首次生成） ----------
         let starfieldReady = false;
-
-        // 创建星星 (双层大小混合)
         function buildStarsAndMeteors() {
             if (starfieldReady) return;
             const container = document.querySelector('.star-container');
-            if (!container) return;
-
-            // 清除可能残留（避免重复生成，但初始为空，安全）
-            // 创建 55 颗精致星芒
-            const starCount = 58;
-            for (let i = 0; i < starCount; i++) {
+            for (let i = 0; i < 58; i++) {
                 const star = document.createElement('div');
                 star.classList.add('shining-star');
-                // 随机大小 1~3px 层次丰富
                 const size = Math.random() * 2.2 + 1;
                 star.style.width = size + 'px';
                 star.style.height = size + 'px';
                 star.style.left = Math.random() * 100 + '%';
                 star.style.top = Math.random() * 100 + '%';
                 star.style.animationDelay = Math.random() * 4 + 's';
-                star.style.animationDuration = Math.random() * 2 + 2 + 's';
                 container.appendChild(star);
             }
-            // 增加极细远星群
             for (let i = 0; i < 34; i++) {
                 const faintStar = document.createElement('div');
                 faintStar.classList.add('shining-star');
@@ -466,104 +433,31 @@
                 faintStar.style.left = Math.random() * 100 + '%';
                 faintStar.style.top = Math.random() * 100 + '%';
                 faintStar.style.opacity = '0.5';
-                faintStar.style.animationDelay = Math.random() * 5 + 's';
                 container.appendChild(faintStar);
             }
-
-            // 流星 4 颗，增加了动态细腻感
-            const meteorCount = 4;
-            for (let i = 0; i < meteorCount; i++) {
+            for (let i = 0; i < 4; i++) {
                 const meteor = document.createElement('div');
                 meteor.classList.add('meteor');
                 meteor.style.top = Math.random() * 65 + '%';
                 meteor.style.left = Math.random() * 80 + 10 + '%';
                 meteor.style.animationDelay = Math.random() * 7 + 's';
-                meteor.style.animationDuration = Math.random() * 4 + 7 + 's';
                 container.appendChild(meteor);
             }
             starfieldReady = true;
         }
 
-        // 监听暗色模式切换，优雅触发星星生成并且同步按钮文案 + 月亮显现
         const toggleBtn = document.getElementById('modeBtn');
         const bodyEl = document.body;
 
-        function setDarkModeUI(isDark) {
-            if (isDark) {
-                // 夜晚模式且还未生成星星 ➕ 生成星野
-                if (!starfieldReady) {
-                    buildStarsAndMeteors();
-                }
+        toggleBtn.addEventListener('click', () => {
+            bodyEl.classList.toggle('dark');
+            if (bodyEl.classList.contains('dark')) {
                 toggleBtn.innerText = '☀️ 白日宣纸';
+                buildStarsAndMeteors();
             } else {
                 toggleBtn.innerText = '🌙 入夜观月';
             }
-        }
-
-        // 切换点击事件 + 额外平滑适配
-        toggleBtn.addEventListener('click', () => {
-            const nowDark = bodyEl.classList.contains('dark');
-            if (!nowDark) {
-                // 切换到暗色模式
-                bodyEl.classList.add('dark');
-                setDarkModeUI(true);
-            } else {
-                bodyEl.classList.remove('dark');
-                setDarkModeUI(false);
-            }
         });
-
-        // 页面初始化：检测是否为暗色模式（默认亮色，但不排除有用户预存）此处不需要预生成星空以极简为主
-        // 但为了符合初始亮色模式时，完全不生成星星（性能优雅）
-        if (bodyEl.classList.contains('dark')) {
-            // 极少情况：body初始就带dark类（如果之前有localstorage记录，但此处无，保留兼容）
-            setDarkModeUI(true);
-            if (!starfieldReady) buildStarsAndMeteors();
-        } else {
-            setDarkModeUI(false);
-            // 亮色模式下星空容器隐藏，不生成任何星星
-        }
-
-        // 可选：对流星的间隔刷新，不需要额外重复构建
-        // 为了避免运行时由于某些动态重新生成引起重复，已加锁 starfieldReady
-        
-        // 为所有 placeholder 链接增加轻微控制台安静处理 (避免页面误跳#)
-        document.querySelectorAll('.menu-main, .sidebar-btn a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                // 无动作，只是未来扩展预留，保持页面安稳
-            });
-        });
-        
-        // 针对“踩一踩”趣味轻提醒（小彩蛋）
-        const guestBtn = document.querySelector('.sidebar-btn a');
-        if (guestBtn) {
-            guestBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                // 轻柔反馈 不打扰用户
-                const toastMsg = document.createElement('div');
-                toastMsg.innerText = '🌿 感谢来访 snowy 小筑';
-                toastMsg.style.position = 'fixed';
-                toastMsg.style.bottom = '20px';
-                toastMsg.style.left = '50%';
-                toastMsg.style.transform = 'translateX(-50%)';
-                toastMsg.style.backgroundColor = 'rgba(0,0,0,0.7)';
-                toastMsg.style.color = '#f0f0e0';
-                toastMsg.style.padding = '5px 16px';
-                toastMsg.style.borderRadius = '40px';
-                toastMsg.style.fontSize = '13px';
-                toastMsg.style.fontFamily = 'inherit';
-                toastMsg.style.backdropFilter = 'blur(8px)';
-                toastMsg.style.zIndex = '999999';
-                toastMsg.style.pointerEvents = 'none';
-                document.body.appendChild(toastMsg);
-                setTimeout(() => { toastMsg.style.opacity = '0'; setTimeout(() => toastMsg.remove(), 600); }, 1600);
-            });
-        }
-
-        // 预加载图优雅处理（确保夜晚图片：moon.png 自然显示）
-        // 为了避免月亮与按钮叠层冲突，按钮已经置于合适位置，月亮优雅呼吸。
-        // 另: 诗词边界微调，阴影过渡完美
     </script>
 </body>
 </html>
