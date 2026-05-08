@@ -2,8 +2,9 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>snowy随记 · 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="snowy 的 2026 年随记，诗词与四季的絮语，日间与夜晚的诗意栖居">
+    <title>snowy随记 · 2026 星月夜</title>
     <style>
         * {
             margin: 0;
@@ -11,10 +12,11 @@
             box-sizing: border-box;
         }
 
+        /* 全局变量设计 */
         :root {
             --bg-main: #f5f0e6;
-            --card-bg: rgba(255,255,255,0.92);
-            --text-color: #333;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --text-color: #2c2c2c;
             --poem-color: #5a4a3c;
             --border-color: #d4c7b0;
             --line-color: #b8a68f;
@@ -22,38 +24,37 @@
             --btn-hover-bg: #8b7d6b;
             --btn-hover-text: #fff;
             --sidebar-bg: #f9f5f0;
-            --sidebar-item: #6d5b53;
-            --shadow-light: 0 4px 15px rgba(0,0,0,0.08);
+            --shadow-light: 0 8px 22px rgba(0, 0, 0, 0.06);
+            --moon-glow: rgba(210, 190, 140, 0.4);
         }
 
         body.dark {
-            --bg-main: linear-gradient(135deg, #0c1428 0%, #101c38 50%, #0f1830 100%);
-            --card-bg: rgba(18,28,45,0.65);
-            --text-color: #e0e6ed;
-            --poem-color: #c9d8f0;
-            --border-color: #2e3f58;
-            --line-color: #4a5b78;
-            --btn-text: #c9d1d9;
-            --btn-hover-bg: #3a4b68;
+            --bg-main: radial-gradient(circle at 20% 30%, #0a1022, #0a142c);
+            --card-bg: rgba(18, 28, 48, 0.72);
+            --text-color: #e6edf5;
+            --poem-color: #d6e2ff;
+            --border-color: #2e405e;
+            --line-color: #5b6f8c;
+            --btn-text: #dfe7f5;
+            --btn-hover-bg: #405e82;
             --btn-hover-text: #fff;
-            --sidebar-bg: rgba(20,30,48,0.65);
-            --sidebar-item: #c9d1d9;
-            --shadow-light: 0 4px 20px rgba(0,0,0,0.25);
+            --sidebar-bg: rgba(22, 34, 55, 0.68);
+            --shadow-light: 0 12px 28px rgba(0, 0, 0, 0.45);
+            --moon-glow: rgba(255, 235, 170, 0.65);
         }
 
         body {
-            font-family: "KaiTi", "STKaiti", "SimSun", serif;
+            font-family: "KaiTi", "STKaiti", "Georgia", "SimSun", serif;
             background: var(--bg-main);
             color: var(--text-color);
             min-height: 100vh;
             padding: 20px;
             position: relative;
             overflow-x: hidden;
-            /* 全局昼夜平滑过渡 */
-            transition: background 1s ease;
+            transition: background 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
-        /* 星空容器 最顶层 不遮挡点击 */
+        /* ---------- 星空容器（懒加载生成）---------- */
         .star-container {
             position: fixed;
             top: 0;
@@ -61,214 +62,250 @@
             width: 100vw;
             height: 100vh;
             pointer-events: none;
-            z-index: 999999;
+            z-index: 99999;
             display: none;
         }
         body.dark .star-container {
             display: block;
         }
 
-        /* 发光星星基础样式 */
+        /* 星星绽放效果 */
         .shining-star {
             position: absolute;
             background: #ffffff;
             border-radius: 50%;
-            box-shadow: 0 0 6px #fff, 0 0 14px rgba(255,255,255,0.8);
-            animation: twinkle 3s infinite alternate ease-in-out;
+            box-shadow: 0 0 6px #fff, 0 0 12px rgba(255, 248, 200, 0.7);
+            animation: twinkle 2.8s infinite alternate ease-in-out;
         }
 
         @keyframes twinkle {
-            0% { opacity: 0.25; transform: scale(0.75); }
-            100% { opacity: 1; transform: scale(1.15); }
+            0% { opacity: 0.2; transform: scale(0.7); }
+            100% { opacity: 1; transform: scale(1.2); }
         }
 
-        /* 流星效果 */
+        /* 流星拖尾 */
         .meteor {
             position: absolute;
             width: 100px;
             height: 2px;
-            background: linear-gradient(-45deg, rgba(255,255,255,1), transparent);
+            background: linear-gradient(95deg, rgba(255, 255, 245, 0.9), rgba(200, 210, 255, 0.2));
             border-radius: 999px;
-            filter: drop-shadow(0 0 6px #fff);
+            filter: blur(1px);
             opacity: 0;
-            animation: meteor 8s infinite linear;
+            animation: meteorFall 9s infinite linear;
         }
 
-        @keyframes meteor {
+        @keyframes meteorFall {
             0% { transform: translateX(0) translateY(0); opacity: 0; }
-            10% { opacity: 1; }
-            100% { transform: translateX(-600px) translateY(600px); opacity: 0; }
+            12% { opacity: 0.9; }
+            100% { transform: translateX(-550px) translateY(520px); opacity: 0; }
         }
 
-        /* 昼夜切换按钮 精致优化 */
+        /* ---------- 右上角月亮（仅暗色模式优雅显现）---------- */
+        .night-moon {
+            position: fixed;
+            top: 20px;
+            right: 88px;
+            width: 48px;
+            height: 48px;
+            background: radial-gradient(circle at 35% 35%, #fff7e8, #ffebb5);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--moon-glow), 0 0 28px rgba(255, 220, 120, 0.5);
+            pointer-events: none;
+            z-index: 1000000;
+            opacity: 0;
+            transition: opacity 0.7s ease, transform 0.6s ease;
+            transform: scale(0.92);
+            /* 仿月坑纹理 */
+            background-image: radial-gradient(circle at 25% 40%, rgba(160, 120, 70, 0.12) 2%, transparent 2.5%),
+                              radial-gradient(circle at 70% 65%, rgba(120, 85, 45, 0.1) 1.8%, transparent 2%);
+            background-size: 22px 22px, 32px 32px;
+        }
+        body.dark .night-moon {
+            opacity: 1;
+            transform: scale(1);
+            animation: moonFloat 4s infinite alternate ease-in-out;
+        }
+
+        @keyframes moonFloat {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-5px) scale(1.02); }
+        }
+
+        /* 切换按钮 - 优化位置避免月亮阻挡 */
         .mode-toggle {
             position: fixed;
-            top: 15px;
-            right: 15px;
-            padding: 7px 14px;
+            top: 26px;
+            right: 18px;
+            padding: 6px 15px;
             border: 1px solid var(--border-color);
-            border-radius: 30px;
+            border-radius: 60px;
             background: var(--card-bg);
             color: var(--text-color);
             font-size: 14px;
+            font-family: inherit;
+            letter-spacing: 1px;
             cursor: pointer;
-            z-index: 1000000;
-            backdrop-filter: blur(6px);
-            transition: all 0.4s ease;
+            z-index: 1000010;
+            backdrop-filter: blur(8px);
+            transition: all 0.35s ease;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
         .mode-toggle:hover {
-            transform: scale(1.08);
-            box-shadow: 0 0 12px rgba(180,200,255,0.3);
+            transform: scale(1.04);
+            background: var(--btn-hover-bg);
+            color: var(--btn-hover-text);
+            border-color: transparent;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
         }
 
+        /* 主容器布局 */
         .wrapper {
             display: flex;
-            gap: 25px;
-            max-width: 1000px;
+            gap: 28px;
+            max-width: 1080px;
             margin: 0 auto;
             width: 100%;
             align-items: stretch;
         }
 
+        /* 侧边栏 艺术质感 */
         .sidebar {
-            width: 240px;
+            width: 250px;
             background: var(--sidebar-bg);
             border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 25px 22px;
+            border-radius: 24px;
+            padding: 28px 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            backdrop-filter: blur(12px);
             box-shadow: var(--shadow-light);
-            backdrop-filter: blur(8px);
-            transition: all 0.6s ease;
-        }
-
-        .sidebar-top {
-            display: flex;
-            flex-direction: column;
+            transition: all 0.5s ease;
         }
 
         .sidebar-title {
             text-align: center;
-            font-size: 18px;
-            margin-bottom: 25px;
+            font-size: 20px;
+            margin-bottom: 28px;
             padding-bottom: 12px;
-            border-bottom: 1px dashed var(--line-color);
-            letter-spacing: 2px;
-            transition: color 0.6s ease;
+            border-bottom: 1.5px dashed var(--line-color);
+            letter-spacing: 2.5px;
+            font-weight: normal;
         }
 
         .menu-group {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .menu-main {
             display: block;
-            font-size: 16px;
+            font-size: 16.5px;
             color: var(--poem-color);
-            padding: 8px 10px;
-            border: 1px solid transparent;
+            padding: 9px 12px;
             border-left: 3px solid var(--line-color);
             text-decoration: none;
-            border-radius: 6px;
-            transition: all 0.4s ease;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: transparent;
         }
 
         .menu-main:hover {
-            background: rgba(180,170,150,0.15);
-            border-color: var(--border-color);
-            padding-left: 14px;
+            background: rgba(160, 140, 120, 0.18);
+            padding-left: 20px;
+            border-left-width: 4px;
+            color: var(--text-color);
         }
 
         .sidebar-btn {
-            margin-top: 20px;
+            margin-top: 24px;
             text-align: center;
         }
 
         .sidebar-btn a {
             display: inline-block;
-            padding: 9px 20px;
+            padding: 9px 24px;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 60px;
             color: var(--btn-text);
             text-decoration: none;
-            font-size: 15px;
-            transition: all 0.4s ease;
+            font-size: 14px;
+            transition: 0.3s;
+            background: rgba(245, 240, 230, 0.2);
         }
 
         .sidebar-btn a:hover {
             background: var(--btn-hover-bg);
             color: var(--btn-hover-text);
             transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
         }
 
         .sidebar-img {
             width: 100%;
             height: auto;
-            border-radius: 12px;
-            margin-top: 30px;
+            border-radius: 20px;
+            margin-top: 28px;
             border: 1px solid var(--border-color);
-            transition: all 0.6s ease;
-            filter: brightness(0.95);
+            transition: all 0.5s;
+            filter: brightness(0.96) contrast(1.02);
         }
         body.dark .sidebar-img {
-            filter: brightness(0.75) contrast(1.1);
+            filter: brightness(0.7) contrast(1.1) sepia(0.1);
         }
 
+        /* 主内容卡片 */
         .main-content {
             flex: 1;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 40px 30px;
+            border-radius: 28px;
+            padding: 36px 32px;
             box-shadow: var(--shadow-light);
             text-align: center;
-            backdrop-filter: blur(8px);
-            transition: all 0.6s ease;
+            backdrop-filter: blur(10px);
+            transition: all 0.55s ease;
         }
 
         h1 {
-            font-size: 26px;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed var(--line-color);
-            letter-spacing: 2px;
-            transition: color 0.6s ease;
+            font-size: 28px;
+            margin-bottom: 28px;
+            padding-bottom: 16px;
+            border-bottom: 1.5px dashed var(--line-color);
+            letter-spacing: 3px;
+            font-weight: 450;
         }
 
-        /* 昼夜自动切换图片 */
-        .img-day { display: block; transition: all 0.6s ease; }
-        .img-night { display: none; transition: all 0.6s ease; }
+        /* 昼夜双图切换无闪烁优化 */
+        .img-day { display: block; }
+        .img-night { display: none; }
         body.dark .img-day { display: none; }
         body.dark .img-night { display: block; }
 
         .mid-img {
             width: 100%;
-            max-width: 520px;
+            max-width: 540px;
             height: auto;
-            border-radius: 14px;
-            margin: 0 auto 30px;
-            transition: all 0.6s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        body.dark .mid-img {
-            box-shadow: 0 4px 18px rgba(0,0,0,0.3);
+            border-radius: 20px;
+            margin: 0 auto 28px;
+            transition: all 0.5s;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
 
+        /* 诗词区域动画 */
         .poem {
-            margin: 30px 0;
+            margin: 30px 0 20px;
         }
 
         .poem-line {
-            font-size: 19px;
+            font-size: 20px;
             line-height: 2.2;
             color: var(--poem-color);
             opacity: 0;
-            transform: translateY(12px);
-            animation: fadeIn 1s forwards ease-out;
-            letter-spacing: 1px;
-            transition: color 0.6s ease;
+            transform: translateY(14px);
+            animation: poemRise 0.95s forwards;
+            letter-spacing: 1.2px;
         }
 
         .poem-line:nth-child(1) { animation-delay: 0.2s; }
@@ -276,81 +313,105 @@
         .poem-line:nth-child(3) { animation-delay: 0.6s; }
         .poem-line:nth-child(4) { animation-delay: 0.8s; }
 
-        @keyframes fadeIn {
+        @keyframes poemRise {
             to { opacity: 1; transform: translateY(0); }
         }
 
         .divider {
-            margin: 25px 0;
+            margin: 28px 0 22px;
             color: var(--line-color);
-            transition: color 0.6s ease;
+            letter-spacing: 3px;
         }
 
         .intro {
             font-size: 17px;
-            line-height: 1.8;
-            transition: color 0.6s ease;
+            line-height: 1.75;
+            max-width: 550px;
+            margin: 0 auto;
         }
 
         footer {
             text-align: center;
-            margin-top: 40px;
-            font-size: 14px;
+            margin-top: 48px;
+            font-size: 13px;
             color: var(--line-color);
-            letter-spacing: 1px;
-            transition: color 0.6s ease;
+            letter-spacing: 2px;
+            opacity: 0.75;
         }
 
-        /* 手机端精细适配 */
-        @media (max-width: 768px) {
-            body { padding: 15px; }
-            .wrapper { flex-direction: column; gap: 20px; }
-            .sidebar { width: 100%; }
-            .main-content { padding: 25px 20px; }
-            h1 { font-size: 22px; }
-            .poem-line { font-size: 17px; line-height: 2; }
-            .mode-toggle { top: 10px; right: 10px; padding: 6px 12px; }
+        /* 响应式设计 · 精致移动端 */
+        @media (max-width: 780px) {
+            body { padding: 14px; }
+            .wrapper { flex-direction: column; gap: 18px; }
+            .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; align-items: center; padding: 18px 22px; }
+            .sidebar-top { width: 100%; display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+            .sidebar-title { margin-bottom: 0; border-bottom: none; font-size: 18px; }
+            .menu-group { display: inline-block; margin: 0 4px; }
+            .menu-main { display: inline-block; border-left: none; border-bottom: 1px solid var(--line-color); padding: 6px 12px; margin: 0 3px; font-size: 14px;}
+            .menu-main:hover { padding-left: 12px; background: none; }
+            .sidebar-img { max-width: 110px; margin-top: 0; margin-left: auto; }
+            .sidebar-btn { margin-top: 0; }
+            .main-content { padding: 26px 20px; }
+            h1 { font-size: 24px; }
+            .poem-line { font-size: 18px; line-height: 1.9; }
+            .night-moon { width: 40px; height: 40px; right: 75px; top: 16px; }
+            .mode-toggle { top: 20px; right: 14px; padding: 5px 12px; font-size: 12px; }
+        }
+
+        @media (max-width: 520px) {
+            .night-moon { width: 34px; height: 34px; right: 62px; top: 16px; }
+            .mode-toggle { right: 10px; top: 18px; }
+            .sidebar-top { justify-content: center; }
+        }
+
+        /* 辅助交互：聚焦可见 */
+        .mode-toggle:focus-visible, .menu-main:focus-visible {
+            outline: 2px solid var(--line-color);
+            outline-offset: 2px;
         }
     </style>
 </head>
-
 <body>
-    <!-- 顶层星空+流星 -->
+
+    <!-- 星空画布（只会在夜间首次生成，优化性能） -->
     <div class="star-container"></div>
 
-    <div class="mode-toggle" id="modeBtn">入夜观月</div>
+    <!-- 右上角装饰孤月：仅暗夜显现 -->
+    <div class="night-moon" aria-hidden="true"></div>
+
+    <!-- 模式切换优雅开关 -->
+    <button class="mode-toggle" id="modeBtn" aria-label="切换日间与夜间模式">入夜观月</button>
 
     <div class="wrapper">
-        <div class="sidebar">
+        <aside class="sidebar">
             <div class="sidebar-top">
-                <div class="sidebar-title">2026年随记</div>
-
+                <div class="sidebar-title">❀ 2026 岁时记 ❀</div>
                 <div class="menu-group">
-                    <a href="#" class="menu-main">立春 谷雨</a>
+                    <a href="javascript:void(0)" class="menu-main">🌱 立春·谷雨</a>
                 </div>
                 <div class="menu-group">
-                    <a href="#" class="menu-main">立夏 大暑</a>
+                    <a href="javascript:void(0)" class="menu-main">🌺 立夏·大暑</a>
                 </div>
                 <div class="menu-group">
-                    <a href="#" class="menu-main">立秋 霜降</a>
+                    <a href="javascript:void(0)" class="menu-main">🍂 立秋·霜降</a>
                 </div>
                 <div class="menu-group">
-                    <a href="#" class="menu-main">立冬 大寒</a>
+                    <a href="javascript:void(0)" class="menu-main">❄️ 立冬·大寒</a>
                 </div>
-
                 <div class="sidebar-btn">
-                    <a href="#">踩一踩 🐾</a>
+                    <a href="javascript:void(0)" aria-label="互动小脚印">🐾 踩一踩</a>
                 </div>
             </div>
+            <img class="sidebar-img" src="flower.png" alt="侧边雅致花卉" loading="lazy">
+        </aside>
 
-            <img class="sidebar-img" src="flower.png" alt="侧边小图">
-        </div>
-
-        <div class="main-content">
+        <main class="main-content">
             <h1>snowy随记 · 二零二六年</h1>
 
-            <img class="mid-img img-day" src="DSC01331.JPG" alt="日间图">
-            <img class="mid-img img-night" src="moon.png" alt="夜晚图">
+            <picture>
+                <img class="mid-img img-day" src="DSC01331.JPG" alt="白日山光水色" loading="eager">
+                <img class="mid-img img-night" src="moon.png" alt="静谧夜月诗意" loading="eager">
+            </picture>
 
             <div class="poem">
                 <div class="poem-line">江天一色无纤尘，</div>
@@ -359,67 +420,150 @@
                 <div class="poem-line">江月何年初照人？</div>
             </div>
 
-            <div class="divider">—— · ——</div>
+            <div class="divider">✧ 今月曾照古时人 ✧</div>
 
             <p class="intro">
                 静看云卷云舒，坐听花落鸟鸣，于尘世一隅中，观宇宙思缥缈。
             </p>
-        </div>
+        </main>
     </div>
 
-    <footer>丙午年 · 夏记</footer>
+    <footer>丙午年 · 夏夜星河记</footer>
 
     <script>
-        // 生成分层发光星星
-        function createStars() {
-            const container = document.querySelector('.star-container');
-            // 大小三层星星 更有层次
-            for (let i = 0; i < 40; i++) {
-                const star = document.createElement('div');
-                star.classList.add('shining-star');
-                let size = Math.random() * 1.8 + 1.2;
-                star.style.width = size + 'px';
-                star.style.height = size + 'px';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 3 + 's';
-                container.appendChild(star);
-            }
-            for (let i = 0; i < 25; i++) {
-                const star = document.createElement('div');
-                star.classList.add('shining-star');
-                let size = Math.random() * 1 + 0.8;
-                star.style.width = size + 'px';
-                star.style.height = size + 'px';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 3 + 's';
-                container.appendChild(star);
-            }
-        }
+        // ---------- 性能优化关键：懒加载星空 & 流星（仅暗色模式首次生成） ----------
+        let starfieldReady = false;
 
-        // 生成流星
-        function createMeteor() {
+        // 创建星星 (双层大小混合)
+        function buildStarsAndMeteors() {
+            if (starfieldReady) return;
             const container = document.querySelector('.star-container');
-            for(let i = 0; i < 3; i++){
+            if (!container) return;
+
+            // 清除可能残留（避免重复生成，但初始为空，安全）
+            // 创建 55 颗精致星芒
+            const starCount = 58;
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('shining-star');
+                // 随机大小 1~3px 层次丰富
+                const size = Math.random() * 2.2 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 4 + 's';
+                star.style.animationDuration = Math.random() * 2 + 2 + 's';
+                container.appendChild(star);
+            }
+            // 增加极细远星群
+            for (let i = 0; i < 34; i++) {
+                const faintStar = document.createElement('div');
+                faintStar.classList.add('shining-star');
+                const tiny = Math.random() * 1.2 + 0.6;
+                faintStar.style.width = tiny + 'px';
+                faintStar.style.height = tiny + 'px';
+                faintStar.style.left = Math.random() * 100 + '%';
+                faintStar.style.top = Math.random() * 100 + '%';
+                faintStar.style.opacity = '0.5';
+                faintStar.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(faintStar);
+            }
+
+            // 流星 4 颗，增加了动态细腻感
+            const meteorCount = 4;
+            for (let i = 0; i < meteorCount; i++) {
                 const meteor = document.createElement('div');
                 meteor.classList.add('meteor');
-                meteor.style.top = Math.random() * 40 + '%';
-                meteor.style.left = Math.random() * 70 + '%';
-                meteor.style.animationDelay = Math.random() * 6 + 's';
+                meteor.style.top = Math.random() * 65 + '%';
+                meteor.style.left = Math.random() * 80 + 10 + '%';
+                meteor.style.animationDelay = Math.random() * 7 + 's';
+                meteor.style.animationDuration = Math.random() * 4 + 7 + 's';
                 container.appendChild(meteor);
+            }
+            starfieldReady = true;
+        }
+
+        // 监听暗色模式切换，优雅触发星星生成并且同步按钮文案 + 月亮显现
+        const toggleBtn = document.getElementById('modeBtn');
+        const bodyEl = document.body;
+
+        function setDarkModeUI(isDark) {
+            if (isDark) {
+                // 夜晚模式且还未生成星星 ➕ 生成星野
+                if (!starfieldReady) {
+                    buildStarsAndMeteors();
+                }
+                toggleBtn.innerText = '☀️ 白日宣纸';
+            } else {
+                toggleBtn.innerText = '🌙 入夜观月';
             }
         }
 
-        createStars();
-        createMeteor();
-
-        // 昼夜切换
-        const btn = document.getElementById('modeBtn');
-        btn.addEventListener('click', () => {
-            document.body.classList.toggle('dark');
-            btn.innerText = document.body.classList.contains('dark') ? '白日宣纸' : '入夜观月';
+        // 切换点击事件 + 额外平滑适配
+        toggleBtn.addEventListener('click', () => {
+            const nowDark = bodyEl.classList.contains('dark');
+            if (!nowDark) {
+                // 切换到暗色模式
+                bodyEl.classList.add('dark');
+                setDarkModeUI(true);
+            } else {
+                bodyEl.classList.remove('dark');
+                setDarkModeUI(false);
+            }
         });
+
+        // 页面初始化：检测是否为暗色模式（默认亮色，但不排除有用户预存）此处不需要预生成星空以极简为主
+        // 但为了符合初始亮色模式时，完全不生成星星（性能优雅）
+        if (bodyEl.classList.contains('dark')) {
+            // 极少情况：body初始就带dark类（如果之前有localstorage记录，但此处无，保留兼容）
+            setDarkModeUI(true);
+            if (!starfieldReady) buildStarsAndMeteors();
+        } else {
+            setDarkModeUI(false);
+            // 亮色模式下星空容器隐藏，不生成任何星星
+        }
+
+        // 可选：对流星的间隔刷新，不需要额外重复构建
+        // 为了避免运行时由于某些动态重新生成引起重复，已加锁 starfieldReady
+        
+        // 为所有 placeholder 链接增加轻微控制台安静处理 (避免页面误跳#)
+        document.querySelectorAll('.menu-main, .sidebar-btn a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                // 无动作，只是未来扩展预留，保持页面安稳
+            });
+        });
+        
+        // 针对“踩一踩”趣味轻提醒（小彩蛋）
+        const guestBtn = document.querySelector('.sidebar-btn a');
+        if (guestBtn) {
+            guestBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                // 轻柔反馈 不打扰用户
+                const toastMsg = document.createElement('div');
+                toastMsg.innerText = '🌿 感谢来访 snowy 小筑';
+                toastMsg.style.position = 'fixed';
+                toastMsg.style.bottom = '20px';
+                toastMsg.style.left = '50%';
+                toastMsg.style.transform = 'translateX(-50%)';
+                toastMsg.style.backgroundColor = 'rgba(0,0,0,0.7)';
+                toastMsg.style.color = '#f0f0e0';
+                toastMsg.style.padding = '5px 16px';
+                toastMsg.style.borderRadius = '40px';
+                toastMsg.style.fontSize = '13px';
+                toastMsg.style.fontFamily = 'inherit';
+                toastMsg.style.backdropFilter = 'blur(8px)';
+                toastMsg.style.zIndex = '999999';
+                toastMsg.style.pointerEvents = 'none';
+                document.body.appendChild(toastMsg);
+                setTimeout(() => { toastMsg.style.opacity = '0'; setTimeout(() => toastMsg.remove(), 600); }, 1600);
+            });
+        }
+
+        // 预加载图优雅处理（确保夜晚图片：moon.png 自然显示）
+        // 为了避免月亮与按钮叠层冲突，按钮已经置于合适位置，月亮优雅呼吸。
+        // 另: 诗词边界微调，阴影过渡完美
     </script>
 </body>
 </html>
