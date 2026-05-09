@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="snowy 的 2026 年随记，诗词与四季的絮语，日间与夜晚的诗意栖居">
     <title>snowy随记 · 二零二六年</title>
-    <!-- 预加载关键图（让图片更快显示） -->
+    <!-- 预加载关键图 -->
     <link rel="preload" as="image" href="DSC01331.JPG">
     <link rel="preload" as="image" href="moon.png">
     <style>
@@ -100,18 +100,18 @@
             100% { transform: translateX(-550px) translateY(520px); opacity: 0; }
         }
 
-        /* 月亮：更大 + 不被按钮挡 */
+        /* 月亮：更大 + 不被按钮遮挡 */
         .night-moon {
             position: fixed;
             top: 16px;
-            right: 120px; /* 远离按钮 */
-            width: 60px;   /* 更大 */
+            right: 120px;
+            width: 60px;
             height: 60px;
             background: radial-gradient(circle at 35% 35%, #fff7e8, #ffebb5);
             border-radius: 50%;
             box-shadow: 0 0 12px var(--moon-glow), 0 0 28px rgba(255, 220, 120, 0.5);
             pointer-events: none;
-            z-index: 1000001; /* 比按钮高一层 */
+            z-index: 1000001;
             opacity: 0;
             transition: opacity 0.7s ease, transform 0.6s ease;
         }
@@ -125,7 +125,6 @@
             100% { transform: translateY(-3px); }
         }
 
-        /* 按钮：层级低于月亮 */
         .mode-toggle {
             position: fixed;
             top: 18px;
@@ -138,7 +137,7 @@
             font-size: 12px;
             font-family: inherit;
             cursor: pointer;
-            z-index: 1000000; /* 比月亮低 */
+            z-index: 1000000;
             backdrop-filter: blur(8px);
             transition: all 0.35s ease;
         }
@@ -172,12 +171,14 @@
             margin: 0 auto;
         }
 
+        /* 侧边栏标题 和 主标题字体统一 */
         .sidebar-title {
             text-align: center;
-            font-size: 18px;
-            padding-bottom: 10px;
+            font-size: 22px;
+            padding-bottom: 12px;
             border-bottom: 1.5px dashed var(--line-color);
             letter-spacing: 2px;
+            font-weight: 450;
         }
 
         .menu-group {
@@ -250,6 +251,7 @@
             padding-bottom: 12px;
             border-bottom: 1.5px dashed var(--line-color);
             letter-spacing: 2px;
+            font-weight: 450;
         }
 
         .img-day { display: block; }
@@ -257,7 +259,6 @@
         body.dark .img-day { display: none; }
         body.dark .img-night { display: block; }
 
-        /* 图片：固定比例防止抖动 + 丝滑显示 */
         .mid-img {
             width: 100%;
             max-width: 100%;
@@ -299,6 +300,14 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* 古风分割装饰线 */
+        .decor-line {
+            margin: 24px 0 16px;
+            color: var(--line-color);
+            font-size: 16px;
+            letter-spacing: 4px;
+        }
+
         .intro {
             font-size: 15px;
             line-height: 1.7;
@@ -337,6 +346,7 @@
 
     <div class="wrapper">
         <aside class="sidebar">
+            <!-- 2026 字体已和大标题统一 -->
             <div class="sidebar-title">2026</div>
             <div class="menu-group"><a href="javascript:void(0)" class="menu-main">🌱 立春 谷雨</a></div>
             <div class="menu-group"><a href="javascript:void(0)" class="menu-main">🍉 立夏 大暑</a></div>
@@ -349,7 +359,6 @@
         <main class="main-content">
             <h1>snowy随记 · 二零二六年</h1>
 
-            <!-- 图片加懒加载，加载完淡入 -->
             <img class="mid-img img-day" src="DSC01331.JPG" alt="白日景色" loading="eager">
             <img class="mid-img img-night" src="moon.png" alt="夜景" loading="eager">
 
@@ -366,6 +375,9 @@
                 <div class="poem-line">江畔何人初见月？</div>
                 <div class="poem-line">江月何年初照人？</div>
             </div>
+
+            <!-- 新增古风分割装饰线 -->
+            <div class="decor-line">—— · ——</div>
 
             <p class="intro">静看云卷云舒，坐听花落鸟鸣，于尘世一隅中，观宇宙思缥缈。</p>
         </main>
